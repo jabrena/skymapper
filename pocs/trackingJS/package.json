@@ -1,0 +1,16 @@
+{
+  "name": "backbonejslab",
+  "version": "0.0.1",
+  "description": "A repository to explore Backbone.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Juan Antonio Breña Moral",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-connect": "^0.2.0",
+    "grunt-cli": "^0.1.13"
+  }
+}
