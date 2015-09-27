@@ -9,23 +9,14 @@ import (
 	"fmt"
 )
 
-/*
-type ImageSet interface {
-	Set(x, y int, c color.Color)
-}
-*/
-type PixelSet struct {
+type Pixel struct {
     x int 
     y int 
-    pixel color.Color
+    color color.Color
 }
 
-type Pixels struct {
-    pixs []PixelSet
-}
-
-func main() {
-	file, err := os.Open("./psmove.jpg")
+func getPixelsFromImage(imagePath string) [800]Pixel {
+	file, err := os.Open(imagePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,24 +24,30 @@ func main() {
 
 	img, err := jpeg.Decode(file)
 	if err != nil {
-		log.Fatal(os.Stderr, "%s: %v\n", "./psmove.jpg", err)
+		log.Fatal(os.Stderr, "%s: %v\n", imagePath, err)
 	}
 
 	b := img.Bounds()
 
-	//imgSet := Pixels{}
-	//var imgSet [5]PixelSet
-	for y := b.Min.Y; y < b.Max.Y; y++ {
-		fmt.Println(y);
-		for x := b.Min.X; x < b.Max.X; x++ {
+	//Defining a Fixed array
+	const limit = 800
+	var imgSet [limit]Pixel
 
+	for y := b.Min.Y; y < b.Max.Y; y++ {
+		for x := b.Min.X; x < b.Max.X; x++ {
 			oldPixel := img.At(x, y)
 			_, g, _, a := oldPixel.RGBA()
-			fmt.Println(g, b, a)
-			//pixel := color.RGBA{uint8(g), uint8(g), uint8(g), uint8(a)}
-			//imgSet := PixelSet{x,y, pixel}
-			
+			pixel := color.RGBA{uint8(g), uint8(g), uint8(g), uint8(a)}
+			imgSet[x] = Pixel{x:x,y:y,color:pixel}
 		}
 	}
-	//fmt.Println(pixel)
+
+	return imgSet
+}
+
+func main() {
+
+	pixels := getPixelsFromImage("./psmove.jpg")
+
+	fmt.Println(pixels)
 }
