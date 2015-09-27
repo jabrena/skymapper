@@ -7,15 +7,22 @@ import (
 	"log"
 	"os"
 	"fmt"
+	"reflect"
 )
 
 type Pixel struct {
-    x int 
-    y int 
     color color.Color
 }
 
-func getPixelsFromImage(imagePath string) [800]Pixel {
+type Blob struct {
+	color color.Color 
+    x1 int
+    x2 int
+    y1 int
+    y2 int
+}
+
+func getPixelsFromImage(imagePath string) [800][530]color.Color {
 	file, err := os.Open(imagePath)
 	if err != nil {
 		log.Fatal(err)
@@ -30,24 +37,66 @@ func getPixelsFromImage(imagePath string) [800]Pixel {
 	b := img.Bounds()
 
 	//Defining a Fixed array
-	const limit = 800
-	var imgSet [limit]Pixel
+	var imgSet [800][530]color.Color
 
 	for y := b.Min.Y; y < b.Max.Y; y++ {
 		for x := b.Min.X; x < b.Max.X; x++ {
 			oldPixel := img.At(x, y)
 			_, g, _, a := oldPixel.RGBA()
 			pixel := color.RGBA{uint8(g), uint8(g), uint8(g), uint8(a)}
-			imgSet[x] = Pixel{x:x,y:y,color:pixel}
+			imgSet[x][y] = pixel
 		}
 	}
 
 	return imgSet
 }
 
+/*
+func getImageDimension([800][530]Pixel imageData) (x int, y int) {
+
+	for _, h := range imageData {
+        y := (len(h)) // each one prints 5
+    }
+    x = len(imageData)
+
+    return x, y
+}
+*/
+
+func getBlobs(imageData [800][530]color.Color, colorPattern color.Color ) Blob {
+
+	//https://golang.org/pkg/image/color/
+
+	var counter int
+	counter = 1
+
+	for y := 0; y < 530; y++ {
+		for x := 0; x < 800; x++ {
+			pixel := imageData[x][y]
+
+			if (reflect.DeepEqual(pixel, colorPattern)){
+				fmt.Println(counter, x, y, "FOUND")
+				counter++
+			}
+			
+
+		}
+	}
+
+	a := Blob{color.RGBA{uint8(255), uint8(255), uint8(255), uint8(255)},1,1,1,1}
+	return a
+}
+
 func main() {
 
-	pixels := getPixelsFromImage("./psmove.jpg")
+	imageFramePath := "./psmove.jpg"
+	imageData := getPixelsFromImage(imageFramePath)
+	//x, y := getImageDimension(imageData)
+	//x := 800
+	//y := 530
 
-	fmt.Println(pixels)
+	//Cyan
+	colorPattern := color.RGBA{uint8(143), uint8(143), uint8(143), uint8(255)}
+	getBlobs(imageData, colorPattern)
+
 }

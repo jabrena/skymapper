@@ -2129,6 +2129,8 @@
     var self = this;
     var colors = this.getColors();
 
+    console.log("Tracking");
+
     if (!colors) {
       throw new Error('Colors not specified, try `new tracking.ColorTracker("magenta")`.');
     }

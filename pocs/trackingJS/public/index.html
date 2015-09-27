@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <title>tracking.js - color hello world</title>
-  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="Styles/demo.css">
 
-  <script src="tracking.js"></script>
+  <script src="Scripts/tracking.js"></script>
 
   <style>
   .rect {
@@ -24,7 +24,7 @@
 
   <div class="demo-frame">
     <div class="demo-container">
-      <img id="img" src="psmove.png" />
+      <img id="img" src="Images/psmove.png" />
     </div>
   </div>
 
@@ -36,6 +36,7 @@
       var tracker = new tracking.ColorTracker(['magenta', 'cyan', 'yellow']);
 
       tracker.on('track', function(event) {
+        console.log(event);
         event.data.forEach(function(rect) {
           window.plot(rect.x, rect.y, rect.width, rect.height, rect.color);
         });
