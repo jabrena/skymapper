@@ -6,4 +6,5 @@ A REST API developed to help robots on local navigation tasks
 
 ``` go
 export GOPATH=`pwd` 
+go get github.com/lucasb-eyer/go-colorful
 ```
