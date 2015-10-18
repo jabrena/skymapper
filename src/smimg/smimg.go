@@ -1,5 +1,10 @@
 package smimg
 
+import (
+    "fmt"
+)
+
+type ColorPixel struct { R, G, B uint8 }
 type Point struct { x, y int }
 type Rectangle struct { min, max Point }
 
@@ -21,16 +26,31 @@ func max(a, b int) int {
     return b
 }
 
-func GetBoxes(data []byte, width int) []Rectangle {
+//TODO: Evolve this function using Colorful library
+func isTheSameColor( currentPixel ColorPixel, colorPattern ColorPixel) bool {
+    flag := false
+    if(currentPixel.R == colorPattern.R && currentPixel.G == colorPattern.G && currentPixel.B == colorPattern.B) {
+        return true
+    }
+    return flag
+}
+
+// The method GetBoxes processes an image frame from a Webcam to return color Blobs. 
+// The method needs a color pattern to detect blobs.
+func GetBoxes(data []byte, width int, pattern ColorPixel) []Rectangle {
+    fmt.Println(len(data));
     total := len(data) / 3
+    //TODO: 10?
     rects := make([]Rectangle, 0, 10)
-    var r, g, b byte
+    var currentPixel ColorPixel
     var i, y, x, size, index, pixel int
     var rect * Rectangle
     pixel: for pixel = 0; pixel < total; pixel++ {
-        i, r, g, b = pixel * 3, data[i], data[i + 1], data[i + 2]
-        if r == 255 && g == 0 && b == 0 {
+        i = pixel * 3
+        currentPixel = ColorPixel{data[i], data[i + 1], data[i + 2]}
+        if isTheSameColor (currentPixel, pattern) {
             y, x = pixel / width, pixel % width;
+            fmt.Println(x,y)
             size = len(rects)
             for index = size - 1; index >= 0; index-- {
                 rect = &rects[index]
