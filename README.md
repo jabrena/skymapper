@@ -11,4 +11,7 @@ To run the software execute the following statements:
 export GOPATH=`pwd` 
 go get github.com/blackjack/webcam
 go get github.com/lucasb-eyer/go-colorful
+
+go test
+go test -bench .
 ```
