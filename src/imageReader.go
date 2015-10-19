@@ -1,4 +1,4 @@
-
+/*
 package main
 
 import (
@@ -51,17 +51,6 @@ func getPixelsFromImage(imagePath string) [800][530]color.Color {
 	return imgSet
 }
 
-/*
-func getImageDimension([800][530]Pixel imageData) (x int, y int) {
-
-	for _, h := range imageData {
-        y := (len(h)) // each one prints 5
-    }
-    x = len(imageData)
-
-    return x, y
-}
-*/
 
 func getBlobs(imageData [800][530]color.Color, colorPattern color.Color ) Blob {
 
@@ -100,3 +89,5 @@ func main() {
 	getBlobs(imageData, colorPattern)
 
 }
+
+*/
