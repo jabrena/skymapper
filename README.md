@@ -8,7 +8,9 @@ Skymapper is a software developed for EV3 Brick which it has a ARM5 board.
 To run the software execute the following statements:
 
 ``` go
+go env
 export GOPATH=`pwd` 
+go get .
 go get github.com/blackjack/webcam
 go get github.com/lucasb-eyer/go-colorful
 
