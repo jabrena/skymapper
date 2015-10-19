@@ -1,5 +1,9 @@
 language: go
 script: go test
 go:
-  - 1.5
+  - 1.4.2
+  - 1.5.1
   - tip
+env:
+  - GOARCH=amd64
+  - GOARCH=arm5
