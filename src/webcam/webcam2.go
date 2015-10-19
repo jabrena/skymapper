@@ -1,4 +1,4 @@
-package main
+package webcam
 
 import (
 	"github.com/blackjack/webcam"
@@ -8,7 +8,7 @@ import (
 )
 
 
-func main() {
+func example() {
 	pic := webcam.GetImg("/dev/video0")
 	fmt.Println(reflect.TypeOf(pic))
 	fo, err := os.Create("image")

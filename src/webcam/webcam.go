@@ -1,4 +1,4 @@
-package main
+package webcam
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 
-func main() {
+func example() {
 	cmd := exec.Command("/usr/bin/streamer", "-c", "/dev/video0", "-o", "frame.jpeg", "-s", "1600x1200")
 	err := cmd.Run()
 	if err != nil {
