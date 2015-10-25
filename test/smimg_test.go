@@ -23,7 +23,7 @@ func TestCreateDigitalInput(t *testing.T) {
     
     // TODO: Avoid this problem: 
     // cannot use data (type [30000]byte) as type []byte in argument to smimg.GetBoxes
-    pattern := smimg.ColorPixel{uint8(255), uint8(0) , uint8(0)}
+    pattern := smimg.Color{uint8(255), uint8(0) , uint8(0)}
     boxes := smimg.GetBoxes(data, 640, pattern)
     fmt.Println(boxes)
 }
@@ -41,9 +41,13 @@ func TestGetBoxes(t *testing.T) {
     if (err != nil) {
         panic("File not found");
     }
-    pattern := smimg.ColorPixel{uint8(255), uint8(0) , uint8(0)}
+    pattern := smimg.Color{uint8(255), uint8(0) , uint8(0)}
     boxes := smimg.GetBoxes(data, 640, pattern)
-    fmt.Println(boxes)
+    if len(boxes) != 4 {
+        fmt.Println(boxes)
+        t.Errorf("Got: %d , Want: %d", len(boxes), 4)
+    }
+
 }
 
 func TestOpenDataFile(t *testing.T) {
@@ -63,7 +67,7 @@ func BenchmarkGetBoxes(b *testing.B) {
     if (err != nil) {
         panic("File not found");
     }
-    pattern := smimg.ColorPixel{uint8(255), uint8(0) , uint8(0)}
+    pattern := smimg.Color{uint8(255), uint8(0) , uint8(0)}
     boxes := smimg.GetBoxes(data, 640, pattern)
     for i := 0; i < b.N; i++ {
         boxes = smimg.GetBoxes(data, 640, pattern)

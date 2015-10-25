@@ -39,7 +39,7 @@ func CreateDigitalImage(imagePath string){
 
 }
 
-func GetPixelsFromImage(imagePath string) [imageWidth * imageHeight * pixelByte]byte {
+func GetPixelsFromImage(imagePath string) []byte {
     file, err := os.Open(imagePath)
     if err != nil {
         panic("File not found");
@@ -54,7 +54,7 @@ func GetPixelsFromImage(imagePath string) [imageWidth * imageHeight * pixelByte]
     b := img.Bounds()
 
     //Defining a Fixed array
-    var imgSet2 [imageWidth * imageHeight * pixelByte] byte
+    imgSet2 := make([]byte, (b.Max.Y - b.Min.Y) * (b.Max.X - b.Min.X) * 3)
     var i int = 0
     for y := b.Min.Y; y < b.Max.Y; y++ {
         for x := b.Min.X; x < b.Max.X; x++ {
