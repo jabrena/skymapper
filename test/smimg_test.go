@@ -18,14 +18,14 @@ func TestCreateDigitalImage(t *testing.T) {
 func TestCreateDigitalInput(t *testing.T) {
     utils.CreateDigitalImage(imagePath)
     fmt.Println("Image created")
-    //data := getPixelsFromImage(imagePath) 
-    utils.GetPixelsFromImage(imagePath) 
+    data := utils.GetPixelsFromImage(imagePath) 
+    //utils.GetPixelsFromImage(imagePath) 
     
     // TODO: Avoid this problem: 
     // cannot use data (type [30000]byte) as type []byte in argument to smimg.GetBoxes
-    //pattern := smimg.ColorPixel{uint8(255), uint8(0) , uint8(0)}
-    //boxes := smimg.GetBoxes(data, 640, pattern)
-    //fmt.Println(boxes)
+    pattern := smimg.ColorPixel{uint8(255), uint8(0) , uint8(0)}
+    boxes := smimg.GetBoxes(data, 640, pattern)
+    fmt.Println(boxes)
 }
 
 func BenchmarkCreateDigitalImage(b *testing.B) {
