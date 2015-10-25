@@ -29,38 +29,26 @@ func max(a, b int) int {
 func GetBoxes(data []byte, width int, pattern Color) []Rectangle {
     total := len(data) / 3
     //TODO: 10?
-    rects := make([]Rectangle, 0, 10)
+    rects := make([]Rectangle, 0)
     var color Color
-    var i, y, x, size, index, pixel int
+    var i, y, x, pixel int
     var rect * Rectangle
-    pixel: for pixel = 0; pixel < total; pixel++ {
+    for pixel = 0; pixel < total; pixel++ {
         i = pixel * 3
         color = Color{data[i], data[i + 1], data[i + 2]}
-        if color.Equals(&pattern) {
+        if pattern.Equals(&color) {
             y, x = pixel / width, pixel % width;
-            size = len(rects)
-            for index = size - 1; index >= 0; index-- {
-                rect = &rects[index]
-                //Horizontal
-                if rect.max.y == y && rect.max.x + 1 == x {
-                    rect.max.x++
-                    continue pixel
-                //Vertical
-                } else if rect.max.y + 1 >= y &&
-                        rect.min.x - 1 <= x &&
-                        rect.max.x + 1 >= x {
-                    rect.max.y = y
-                    continue pixel
-                }
+            if rect != nil && rect.max.y == y && rect.max.x + 1 == x {
+                rect.max.x++
+            } else {
+                rects = append(rects, Rectangle{ Point{ x, y }, Point{ x, y }})
+                rect = &rects[len(rects)-1]    
             }
-            rects = append(
-                rects,
-                Rectangle{ Point{ x, y },
-                Point{ x, y }})
         }
     }
-    size = len(rects)
-    result := make([]Rectangle, 0, 4)
+    //return rects
+    size := len(rects)
+    result := make([]Rectangle, 0)
     rect: for i := 0; i < size; i++ {
         for j := i + 1; j < size; j++ {
             if rects[i].max.y + 1 >= rects[j].max.y && 
@@ -76,4 +64,5 @@ func GetBoxes(data []byte, width int, pattern Color) []Rectangle {
         result = append(result, rects[i])
     }
     return result
+    
 }
